@@ -1,8 +1,8 @@
-//go:build !linux && !windows && !darwin
-// +build !linux,!windows,!darwin
+//go:build darwin && !dockerless
+// +build darwin,!dockerless
 
 /*
-Copyright 2020 The Kubernetes Authors.
+Copyright 2016 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,10 +20,16 @@ limitations under the License.
 package cm
 
 import (
-	"k8s.io/api/core/v1"
-	runtimeapi "k8s.io/cri-api/pkg/apis/runtime/v1alpha2"
+	"k8s.io/kubernetes/pkg/kubelet/dockershim/libdocker"
 )
 
-func (i *internalContainerLifecycleImpl) PreCreateContainer(pod *v1.Pod, container *v1.Container, containerConfig *runtimeapi.ContainerConfig) error {
+type unsupportedContainerManager struct{}
+
+// NewContainerManager creates a new instance of ContainerManager
+func NewContainerManager(_ string, _ libdocker.Interface) ContainerManager {
+	return &unsupportedContainerManager{}
+}
+
+func (m *unsupportedContainerManager) Start() error {
 	return nil
 }

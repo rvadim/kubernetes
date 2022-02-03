@@ -1,4 +1,5 @@
-// +build !linux,!windows
+//go:build !linux && !windows && !darwin
+// +build !linux,!windows,!darwin
 
 /*
 Copyright 2015 The Kubernetes Authors.
@@ -26,6 +27,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/tools/record"
 	internalapi "k8s.io/cri-api/pkg/apis"
+
 	"k8s.io/kubernetes/pkg/kubelet/cadvisor"
 	"k8s.io/kubernetes/pkg/kubelet/config"
 	"k8s.io/kubernetes/pkg/kubelet/status"
