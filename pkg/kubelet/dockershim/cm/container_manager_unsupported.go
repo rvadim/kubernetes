@@ -1,4 +1,5 @@
-// +build !linux,!windows,!dockerless
+//go:build !linux && !windows && !dockerless && !darwin
+// +build !linux,!windows,!dockerless,!darwin
 
 /*
 Copyright 2016 The Kubernetes Authors.
@@ -19,8 +20,6 @@ limitations under the License.
 package cm
 
 import (
-	"fmt"
-
 	"k8s.io/kubernetes/pkg/kubelet/dockershim/libdocker"
 )
 

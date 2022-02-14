@@ -1,26 +1,9 @@
-//go:build !linux && !windows && !darwin
-// +build !linux,!windows,!darwin
-
-/*
-Copyright 2014 The Kubernetes Authors.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+//go:build darwin
+// +build darwin
 
 package hostutil
 
 import (
-	"errors"
 	"os"
 
 	"k8s.io/mount-utils"
@@ -36,16 +19,14 @@ func NewHostUtil() *HostUtil {
 	return &HostUtil{}
 }
 
-var errUnsupported = errors.New("volume/util/hostutil on this platform is not supported")
-
 // DeviceOpened always returns an error on unsupported platforms
 func (hu *HostUtil) DeviceOpened(pathname string) (bool, error) {
-	return false, errUnsupported
+	return false, nil
 }
 
 // PathIsDevice always returns an error on unsupported platforms
 func (hu *HostUtil) PathIsDevice(pathname string) (bool, error) {
-	return true, errUnsupported
+	return false, nil
 }
 
 // GetDeviceNameFromMount always returns an error on unsupported platforms
@@ -55,49 +36,49 @@ func (hu *HostUtil) GetDeviceNameFromMount(mounter mount.Interface, mountPath, p
 
 // MakeRShared always returns an error on unsupported platforms
 func (hu *HostUtil) MakeRShared(path string) error {
-	return errUnsupported
+	return nil
 }
 
 // GetFileType always returns an error on unsupported platforms
 func (hu *HostUtil) GetFileType(pathname string) (FileType, error) {
-	return FileType("fake"), errUnsupported
+	return FileType("fake"), nil
 }
 
 // MakeFile always returns an error on unsupported platforms
 func (hu *HostUtil) MakeFile(pathname string) error {
-	return errUnsupported
+	return nil
 }
 
 // MakeDir always returns an error on unsupported platforms
 func (hu *HostUtil) MakeDir(pathname string) error {
-	return errUnsupported
+	return nil
 }
 
 // PathExists always returns an error on unsupported platforms
 func (hu *HostUtil) PathExists(pathname string) (bool, error) {
-	return true, errUnsupported
+	return false, nil
 }
 
 // EvalHostSymlinks always returns an error on unsupported platforms
 func (hu *HostUtil) EvalHostSymlinks(pathname string) (string, error) {
-	return "", errUnsupported
+	return "", nil
 }
 
 // GetOwner always returns an error on unsupported platforms
 func (hu *HostUtil) GetOwner(pathname string) (int64, int64, error) {
-	return -1, -1, errUnsupported
+	return -1, -1, nil
 }
 
-// GetSELinuxSupport always returns an error on unsupported platforms
+// GetSELinuxSupport always returns false on MacOS
 func (hu *HostUtil) GetSELinuxSupport(pathname string) (bool, error) {
-	return false, errUnsupported
+	return false, nil
 }
 
 //GetMode always returns an error on unsupported platforms
 func (hu *HostUtil) GetMode(pathname string) (os.FileMode, error) {
-	return 0, errUnsupported
+	return 0, nil
 }
 
 func getDeviceNameFromMount(mounter mount.Interface, mountPath, pluginMountDir string) (string, error) {
-	return "", errUnsupported
+	return "", nil
 }
